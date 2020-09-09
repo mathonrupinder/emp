@@ -2,31 +2,31 @@ echo "Welcome to Employee wage computation prgram"
 wageperhr=20
 ispartTime=1
 isfullTime=2
-totalsalary=0
+fulldayhrs=8
+halfdayhrs=4
 workingdays=25
 totalWorkHrs=100
 workhrs=0
 days=0
-while [[ $workhrs -le $totalWorkHrs && $days -le $workingdays ]]
-do
-        empcheck=$(( RANDOM%3 ))
+function getworkinghours() {
         case $empcheck in
              $ispartTime)
-                   emphrs=4;;
+                   echo $halfdayhrs;;
              $isfullTime)
-                   emphrs=8;;
+                   echo $fulldayhrs;;
             *)
-                   emphrs=0;;
+                   echo 0;
       esac
-
-      dailywage=$(( $emphrs*$wageperhr ))
-      totalsalary=$(( $totalsalary+$dailywage ))
-      echo "$days    $workhrs  $dailywage  :     $totalsalary"
-
-      workhrs=$(( $workhrs+$emphrs ))
-          ((days++))
-
+}
+while [[ $workhrs -lt $totalWorkHrs ]] && [[ $days -lt $workingdays ]]
+do
+      empcheck=$(( RANDOM%3 ))
+      dailyhours="$( getworkinghours $empcheck )"
+      dailywage=$(( dailyhours * wageperhr))
+      workhrs=$(( workhrs + dailyhours ))
+      totalsalary=$(( totalsalary + dailywage ))
+      ((days++))
+      echo "Day $days           workhrs $workhrs        dailywage  $dailywage          total       $totalsalary"
 
 done
-
 
