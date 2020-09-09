@@ -1,9 +1,11 @@
 echo "Welcome to Employee wage computation prgram"
-
 wageperhr=20
 ispartTime=1
 isfullTime=2
-
+totalsalary=0
+workingdays=25
+for (( day=1; day<=$workingdays; day++ ))
+do
         empcheck=$(( RANDOM%3 ))
         case $empcheck in
              $ispartTime)
@@ -15,6 +17,7 @@ isfullTime=2
       esac
 
           salary=$(( $emphrs*$wageperhr ))
-          echo "$salary"
+          totalsalary=$(( $totalsalary+$salary ))
 
+done
 
