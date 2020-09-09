@@ -4,7 +4,10 @@ ispartTime=1
 isfullTime=2
 totalsalary=0
 workingdays=25
-for (( day=1; day<=$workingdays; day++ ))
+totalWorkHrs=100
+workhrs=0
+days=0
+while [[ $workhrs -le $totalWorkHrs && $days -le $workingdays ]]
 do
         empcheck=$(( RANDOM%3 ))
         case $empcheck in
@@ -13,11 +16,17 @@ do
              $isfullTime)
                    emphrs=8;;
             *)
-        emphrs=0;;
+                   emphrs=0;;
       esac
 
-          salary=$(( $emphrs*$wageperhr ))
-          totalsalary=$(( $totalsalary+$salary ))
+      dailywage=$(( $emphrs*$wageperhr ))
+      totalsalary=$(( $totalsalary+$dailywage ))
+      echo "$days    $workhrs  $dailywage  :     $totalsalary"
+
+      workhrs=$(( $workhrs+$emphrs ))
+          ((days++))
+
 
 done
+
 
